@@ -62,15 +62,21 @@ The `log`, `output` and `error` files all track information printed by the job o
 about the job (and we'll learn more after we submit the job).  
 
 The "transfer files" lines all tell HTCondor what to do with output and input 
-files.  We'll cover the `transfer_input_files` 
+files.  We'll cover the `transfer_input_files` line in a later part of the lesson.  
 
+The `request_` lines tell HTCondor how many resources on the computer that you 
+need to run your jobs.  
 
+The final `queue` statement actually creates a job when the submit file is 
+submitted.  In this example, `queue 3` means that three separate jobs will be 
+submitted.  These jobs will each have a unique "Process" number assigned by 
+HTCondor, and wherever you see `$(Process)` in the submit file above, that 
+variable will be replaced by the process number for that job.  
 
 > ## Create a submit file
 > 
 > Create a file called `hello-chtc.sub` as shown above. 
 {: .challenge}
-
 
 
 ## Sample Executable
@@ -82,7 +88,7 @@ echo "Hello CHTC from Job $1 running on `whoami`@`hostname`"
 ls -lh
 sleep 60
 ~~~
-{. bash}
+{: .bash}
 
 > ## Create the executable
 > 
