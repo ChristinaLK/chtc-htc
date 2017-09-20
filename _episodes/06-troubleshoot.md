@@ -53,5 +53,4 @@ keypoints:
 > on the submit node and it will change the format for you.  If you 
 > release your held jobs (using `condor_release`) or 
 > re-submit the jobs, you should no longer get the same error.  
-
 {: .callout}
