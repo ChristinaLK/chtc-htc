@@ -33,15 +33,18 @@ some common problems and how to solve them.
 Let's check in on the job we just submitted.  If we run `condor_q`, we'll see 
 that these jobs are in a new state -- they're not running, or idle, but on hold.  
  
-> condor_q
+~~~
+condor_q
+~~~
 {: .bash}
 
-> -- Schedd: learn.chtc.wisc.edu : <128.104.100.43:9618?... @ 09/20/17 17:31:38
-> OWNER  BATCH_NAME            SUBMITTED   DONE   RUN    IDLE   HOLD  TOTAL JOB_IDS
-> alice CMD: hello-chtc.sh   9/20 16:40      _      _      _      3      3 36260.0-2
-> 
-> 3 jobs; 0 completed, 0 removed, 0 idle, 0 running, 3 held, 0 suspended
-> 
+~~~
+-- Schedd: learn.chtc.wisc.edu : <128.104.100.43:9618?... @ 09/20/17 17:31:38
+OWNER  BATCH_NAME            SUBMITTED   DONE   RUN    IDLE   HOLD  TOTAL JOB_IDS
+alice CMD: hello-chtc.sh   9/20 16:40      _      _      _      3      3 36260.0-2
+
+3 jobs; 0 completed, 0 removed, 0 idle, 0 running, 3 held, 0 suspended
+~~~ 
 {: .output}
 
 We can find out why jobs are on hold by looking in the *log* file, or by running 
@@ -51,9 +54,11 @@ a special version of the `condor_q` command that gives us the *Hold Reason*.
 {: .bash}
 
 The hold reason for this job is: 
-> Error from slot1_6@e231.chtc.wisc.edu: Failed 
+~~~
+Error from slot1_6@e231.chtc.wisc.edu: Failed 
 to execute '/var/lib/condor/execute/slot1/dir_7462/condor_exec.exe' with 
 arguments 0: (errno=8: 'Exec format error')
+~~~
 {: .source}
 
 That's pretty obscure, but in this case, means that something is wrong 
@@ -63,7 +68,9 @@ it needs to run successfully.
 > ## Fixed Script, Part I
 > 
 > Fix the `hello-chtc` script by adding the header back to the top: 
-> > #!/bin/bash
+> ~~~
+> #!/bin/bash
+> ~~~
 > {: .source}
 > 
 > Then release the held jobs by running `condor_release` with your username.  
@@ -83,9 +90,11 @@ it needs to run successfully.
 > 
 > Do you have a Windows computer? Did your job go on hold with an error like this?  
 > 
-> > Error from slot1_11@e189.chtc.wisc.edu: Failed to execute 
-> > '/var/lib/condor/execute/slot1/dir_4086540/condor_exec.exe' with 
-> > arguments 2: (errno=2: 'No such file or directory')
+> ~~~
+> Error from slot1_11@e189.chtc.wisc.edu: Failed to execute 
+> '/var/lib/condor/execute/slot1/dir_4086540/condor_exec.exe' with 
+> arguments 2: (errno=2: 'No such file or directory')
+> ~~~
 > {: .output}
 > 
 > Your script may not work due to a Windows/Linux incompatibility. Files 
@@ -96,7 +105,9 @@ it needs to run successfully.
 > if they have the Windows/DOS line endings. 
 > To check if this is the problem, you can open the script in 
 > the vi text editor, using its "binary" mode:
-> > vi -b hello-chtc.sh
+> ~~~
+> vi -b hello-chtc.sh
+> ~~~
 > {: .bash}
 > If you see `^M` characters at the end of each line, those 
 > are the DOS line endings and that's the problem. 
@@ -104,7 +115,9 @@ it needs to run successfully.
 >
 > Luckily, there is an easy fix!  To convert the script to 
 > unix line endings so that it will run correctly, you can run: 
-> > dos2unix hello-chtc.sh
+> ~~~
+> dos2unix hello-chtc.sh
+> ~~~
 > {: .output}
 > on the submit node and it will change the format for you.  If you 
 > release your held jobs (using `condor_release`) or 
@@ -139,13 +152,17 @@ tell which directory on the submit server where we can find these files.
 > ## Optional Exercise: Can't Start
 > 
 > Edit your `hello-chtc.sub` submit file by adding one line: 
-> > requirements = (OpSysMajorVer == 5)
+> ~~~
+> requirements = (OpSysMajorVer == 5)
+> ~~~
 > {: .source}
 > 
 > Then submit the jobs.  Even if you wait 5-10 minutes, they probably 
 > won't start running.  To see why, choose one of the JobIds and run: 
 > 
-> > condor_q -better-analyze JobId
+> ~~~
+> condor_q -better-analyze JobId
+> ~~~
 > {.bash}
 > 
 > This will print out an analysis of why your job isn't running.  
