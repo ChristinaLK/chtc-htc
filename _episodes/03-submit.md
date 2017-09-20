@@ -7,7 +7,8 @@ objectives:
 - "Create a submit file from a template."
 - "Explain what each line of the submit file does."  
 keypoints:
-- "A submit file..."
+- "A submit file tells the job scheduler information like resource requirements, 
+software and data requirements, and what commands to run."
 ---
 
 > ## Information Wanted
