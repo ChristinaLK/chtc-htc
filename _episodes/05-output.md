@@ -7,9 +7,10 @@ objectives:
 - "Compare and contrast the different output files created by the job and what information you can learn from each."
 - "Determine when a job started and completed."  
 keypoints:
-- "Log file: ."
-- "Output file: ."
-- "Error file: ."
+- "Successful jobs leave the queue, bring back output files, and have no errors."
+- "Log files tell when and where a job waited and ran, and how many resources it used."
+- "Output files capture any general information printed by the job's executable."
+- "Error files capture any errors that printed when the job executable ran."
 ---
 
 How do you know if your job ran successfully?  Usually, there are a few signs: 
@@ -20,11 +21,6 @@ How do you know if your job ran successfully?  Usually, there are a few signs:
 One way to determine this information is by looking at the different output files 
 created by the job.  Below are the three standard output files types 
 and what information you can learn from each one: 
-
-> ## Review
-> 
-> Which lines in the submit file create these files?  
-{: .challenge}
 
 ## Log
 
@@ -48,6 +44,11 @@ The error file contains any errors that would normally have been printed
 to the terminal if you were running the script/program yourself from the 
 command line. This is a good place to look first if you think your code 
 triggered an error. 
+
+> ## Review
+> 
+> Which lines in the submit file create these files?  
+{: .challenge}
 
 > ## Finding Out Information
 > 
