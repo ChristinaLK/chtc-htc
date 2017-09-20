@@ -12,16 +12,72 @@ keypoints:
 - "You can use log, standard output, and standard error information to determine why jobs fail." 
 ---
 
-> Run test jobs / interactive jobs.  
+> ## Broken Script
+> 
+> Edit your `hello-chtc.sh` script: 
+> * Delete the first line
+> * Add a command at the end that says `cat my_files.txt`
+> 
+> Then submit the same submit file as before.  
+{: .challenge}
 
-> Where can jobs fail?  Answer: scheduler/hardware issue, software issue, etc...
+## Debugging Job Failures
 
-> Where to find answers: out/error/log files, 
+Jobs can fail in lots of different ways!  Sometimes the program you 
+want to run doesn't work, there can be a problem with the server, HTCondor 
+isn't matching jobs properly... the list goes on and on!  Here are 
+some common problems and how to solve them.  
 
-> How to write a good email to ask for help: describe problem, what you 
-> expected, what you saw instead.  
+### Held Jobs
 
-> callout for common bash scripting error w/ ^M line endings
+Let's check in on the job we just submitted.  If we run `condor_q`, we'll see 
+that these jobs are in a new state -- they're not running, or idle, but on hold.  
+ 
+> condor_q
+{: .bash}
+
+> -- Schedd: learn.chtc.wisc.edu : <128.104.100.43:9618?... @ 09/20/17 17:31:38
+> OWNER  BATCH_NAME            SUBMITTED   DONE   RUN    IDLE   HOLD  TOTAL JOB_IDS
+> alice CMD: hello-chtc.sh   9/20 16:40      _      _      _      3      3 36260.0-2
+> 
+> 3 jobs; 0 completed, 0 removed, 0 idle, 0 running, 3 held, 0 suspended
+> 
+{: .output}
+
+We can find out why jobs are on hold by looking in the *log* file, or by running 
+a special version of the `condor_q` command that gives us the *Hold Reason*.
+
+> condor_q -af holdreason
+{: .bash}
+
+The hold reason for this job is: 
+> Error from slot1_6@e231.chtc.wisc.edu: Failed 
+to execute '/var/lib/condor/execute/slot1/dir_7462/condor_exec.exe' with 
+arguments 0: (errno=8: 'Exec format error')
+{: .source}
+
+That's pretty obscure, but in this case, means that something is wrong 
+with our executable.  We deleted the first line of the script, which 
+it needs to run successfully.  
+
+> ## Fixed Script, Part I
+> 
+> Fix the `hello-chtc` script by adding the header back to the top: 
+> > #!/bin/bash
+> {: .source}
+> 
+> Then release the held jobs by running `condor_release` with your username.  
+{: .challenge}
+
+> ## Other Common Hold Reasons
+> 
+> * "Disk quota exceeded": Output files can't be returned to 
+> the submit node if you have reached your quota. See this page 
+> for instructions on managing your quota.
+> *"Job has gone over memory limit of X": Look at the resource usage table 
+> in your log files - are you requesting enough memory for your jobs?
+> * "Job failed to complete in 72 hrs"
+{: .callout}
 
 > ## Windows/Linux Error
 > 
@@ -54,3 +110,43 @@ keypoints:
 > release your held jobs (using `condor_release`) or 
 > re-submit the jobs, you should no longer get the same error.  
 {: .callout}
+
+### Jobs with Errors 
+
+
+
+## Preventing Job Failures
+
+> Run test jobs / interactive jobs.  
+
+## Asking For Help
+
+Sometimes you might not be able to figure out what's going on with your jobs, or 
+why.  Don't hesitate to email chtc@cs.wisc.edu with questions.  A good troubleshooting 
+request has the following information: 
+
+* Tell which submit server you log into
+* Describe your problem:
+  * What are you trying to do?
+  * What did you expect to see?
+  * What was different than what you expected?
+  * What error messages have you received (if any)?
+* Attach any relevant files (output, error, log, submit files, scripts) or 
+tell which directory on the submit server where we can find these files.
+
+
+
+> ## Optional Exercise: Can't Start
+> 
+> Edit your `hello-chtc.sub` submit file by adding one line: 
+> > requirements = (OpSysMajorVer == 5)
+> {: .source}
+> 
+> Then submit the jobs.  Even if you wait 5-10 minutes, they probably 
+> won't start running.  To see why, choose one of the JobIds and run: 
+> 
+> > condor_q -better-analyze JobId
+> {.bash}
+> 
+> This will print out an analysis of why your job isn't running.  
+{: .challenge}
