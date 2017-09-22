@@ -93,5 +93,10 @@ sleep 60
 
 > ## Create the executable
 > 
-> Create a file called `hello-chtc.sh` as shown above. 
+> Create a file called `hello-chtc.sh` as shown above.  Give it 
+> executable permissions by running: 
+> ~~~
+> chmod +x hello-chtc.sh
+> ~~~
+> {: .bash}
 {: .challenge}
