@@ -45,7 +45,8 @@ before submitting a large new batch of work.  In particular, if you
 expect your jobs to be particularly "big", e.g.: 
 * if your files are more than a few GB, especially input data
 * if your jobs are looooooonnnnnggggg
-* if you want to submit lots of jobs at once (more than 10,000
+* if you want to submit lots of jobs at once (more than 10,000)
+
 Consult with a research computing facilitator, as we can provide the 
 best way to handle these extreme cases for you and for everyone else.  
 
