@@ -28,7 +28,7 @@ want to run doesn't work, there can be a problem with the server, HTCondor
 isn't matching jobs properly... the list goes on and on!  Here are 
 some common problems and how to solve them.  
 
-### Held Jobs
+## Held Jobs
 
 Let's check in on the job we just submitted.  If we run `condor_q`, we'll see 
 that these jobs are in a new state -- they're not running, or idle, but on hold.  
@@ -50,7 +50,9 @@ alice CMD: hello-chtc.sh   9/20 16:40      _      _      _      3      3 36260.0
 We can find out why jobs are on hold by looking in the *log* file, or by running 
 a special version of the `condor_q` command that gives us the *Hold Reason*.
 
-> condor_q -af holdreason
+~~~
+condor_q -af holdreason
+~~~
 {: .bash}
 
 The hold reason for this job is: 
@@ -124,13 +126,55 @@ it needs to run successfully.
 > re-submit the jobs, you should no longer get the same error.  
 {: .callout}
 
-### Jobs with Errors 
+## Jobs with Errors 
 
+Check the queue to see if your jobs have started and ran.  Once they've 
+left the queue, take a look at the error and output files.  Note that 
+they don't have the information we would expect -- there's no message in 
+the output file and there's an error in the error file.  
 
+This is the main way that you will see that jobs have failed -- absence 
+of expected output, or presence of error message.  The error messages are then 
+your best tool to find out what's wrong.  Another tool is to try running 
+the job interactively.  
 
-## Preventing Job Failures
+## Interactive Jobs
 
-> Run test jobs / interactive jobs.  
+You can run any job interactively (i.e., you run the commands yourself, 
+instead of HTCondor) by submitting a submit file with the `-i` flag.  
+
+> ## Optional Exercise: Interactive Jobs
+> 
+> Create a copy of your `hello-chtc.sub` file called `hello-interactive.sub`.  
+> Make the following two changes: 
+> 1. Only submit one job: 
+> ~~~
+> queue 1
+> ~~~
+> {: .source}
+> 
+> 2. Also, uncomment the `transfer_input_files` line and add your executable: 
+> ~~~
+> transfer_input_files = hello-chtc.sh
+> ~~~
+> {: .source}
+>
+> Then submit the job using the `-i` flag: 
+> ~~~
+> condor_submit -i hello-interactive.sub
+> ~~~
+> {: .bash}
+> 
+> Once the job starts, try running your script.  Can you see how an interactive 
+> job would be a good way to troubleshoot?
+{: .challenge}
+
+## Testing
+
+It's always a good idea to run test 
+jobs before a large batch to ensure that your jobs are running successfully, 
+have an accurate memory and disk request (which file can tell you this?) and 
+finish in 72 hours.  
 
 ## Asking For Help
 
@@ -147,8 +191,6 @@ request has the following information:
 * Attach any relevant files (output, error, log, submit files, scripts) or 
 tell which directory on the submit server where we can find these files.
 
-
-
 > ## Optional Exercise: Can't Start
 > 
 > Edit your `hello-chtc.sub` submit file by adding one line: 
@@ -163,7 +205,7 @@ tell which directory on the submit server where we can find these files.
 > ~~~
 > condor_q -better-analyze JobId
 > ~~~
-> {.bash}
+> {: .bash}
 > 
 > This will print out an analysis of why your job isn't running.  
 {: .challenge}
