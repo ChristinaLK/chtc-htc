@@ -16,7 +16,7 @@ keypoints:
 > 
 > Edit your `hello-chtc.sh` script: 
 > * Delete the first line
-> * Add a command at the end that says `cat my_files.txt`
+> * Change "echo" to "ech0"
 > 
 > Then submit the same submit file as before.  
 {: .challenge}
@@ -47,7 +47,7 @@ alice CMD: hello-chtc.sh   9/20 16:40      _      _      _      3      3 36260.0
 ~~~ 
 {: .output}
 
-We can find out why jobs are on hold by looking in the *log* file, or by running 
+We can find out why jobs are on hold by looking in the **log** file, or by running 
 a special version of the `condor_q` command that gives us the *Hold Reason*.
 
 ~~~
@@ -69,7 +69,7 @@ it needs to run successfully.
 
 > ## Fixed Script, Part I
 > 
-> Fix the `hello-chtc` script by adding the header back to the top: 
+> Fix the `hello-chtc.sh` script by adding the header back to the top: 
 > ~~~
 > #!/bin/bash
 > ~~~
@@ -83,7 +83,7 @@ it needs to run successfully.
 > * "Disk quota exceeded": Output files can't be returned to 
 > the submit node if you have reached your quota. See this page 
 > for instructions on managing your quota.
-> *"Job has gone over memory limit of X": Look at the resource usage table 
+> * "Job has gone over memory limit of X": Look at the resource usage table 
 > in your log files - are you requesting enough memory for your jobs?
 > * "Job failed to complete in 72 hrs"
 {: .callout}
@@ -113,7 +113,7 @@ it needs to run successfully.
 > {: .bash}
 > If you see `^M` characters at the end of each line, those 
 > are the DOS line endings and that's the problem. 
-> (Type `:q` to quit vi)
+> (Type `:q` to quit `vi`)
 >
 > Luckily, there is an easy fix!  To convert the script to 
 > unix line endings so that it will run correctly, you can run: 
@@ -148,12 +148,14 @@ instead of HTCondor) by submitting a submit file with the `-i` flag.
 > Create a copy of your `hello-chtc.sub` file called `hello-interactive.sub`.  
 > Make the following two changes: 
 > 1. Only submit one job: 
+> 
 > ~~~
 > queue 1
 > ~~~
 > {: .source}
 > 
 > 2. Also, uncomment the `transfer_input_files` line and add your executable: 
+> 
 > ~~~
 > transfer_input_files = hello-chtc.sh
 > ~~~

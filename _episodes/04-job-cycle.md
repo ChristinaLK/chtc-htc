@@ -64,12 +64,14 @@ It's also possible to manually change the state of your job instead of
 waiting for HTCondor do it.  You can't make your job run, but you can always: 
 
 * remove a job yourself
+
 ~~~
 condor_rm JobId
 ~~~
 {: .bash}
 
 * put a job on hold yourself
+
 ~~~
 condor_hold JobId
 ~~~

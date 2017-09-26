@@ -13,8 +13,8 @@ keypoints:
 
 CHTC's high throughput compute system has 100s of users and 1000s of 
 jobs.  In a shared environment like this, one user's bad jobs can 
-cause huge problems for not only themselves, but everybody else.  
-Thus it is imperative that everyone understand CHTC policies and 
+cause huge problems for not only themselves, but everybody else.   Thus it 
+is imperative that everyone understand CHTC policies and 
 follow them.  This episode explains what our policies are and why 
 we have them.  
 
