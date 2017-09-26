@@ -11,6 +11,16 @@ keypoints:
 software and data requirements, and what commands to run."
 ---
 
+> ## Log in
+> 
+> [This page](http://chtc.cs.wisc.edu/connecting#login) has 
+> information about how to log into the submit 
+> server.  If you already have an account in CHTC, log into 
+> the submit server where your account was created.  If you 
+> don't already have a CHTC account, you'll be logging into 
+> `learn.chtc.wisc.edu`.  
+{: .challenge}
+
 > ## Information Wanted
 > 
 > Before we go further, what information do you think the scheduler
@@ -87,7 +97,7 @@ variable will be replaced by the process number for that job.
 
 echo "Hello CHTC from Job $1 running on `whoami`@`hostname`"
 ls -lh
-sleep 60
+sleep 120
 ~~~
 {: .bash}
 
